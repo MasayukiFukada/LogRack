@@ -3,22 +3,38 @@ services:
   web:
     build: ./docker/
     ports:
-      - 4000:4000
+      - "4000:4000"
     command: mix phx.server
+    user: "${UID}:${GID}"
     environment:
       - MIX_ENV=dev
       - PORT=4000
+      - DB_HOST=db
+      - DB_NAME=log_lac_dev
+      - DB_USERNAME=postgres
+      - DB_PASSWORD=postgres
     volumes:
       - .:/app
+    depends_on:
+      - db
+    networks:
+      - app-net
 
   db:
     image: postgres
+    expose:
+      - "5432"
     ports:
-      - 5432:5432
+      - "5432:5432"
     environment:
+      - POSTGRES_DB=log_lac_dev
       - POSTGRES_USER=postgres
       - POSTGRES_PASSWORD=postgres
-      - POSTGRES_HOST=db
     volumes:
       - ./docker/data:/var/lib/postgresql/data
+    networks:
+      - app-net
 
+networks:
+  app-net:
+    driver: bridge

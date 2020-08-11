@@ -13,3 +13,5 @@ RUN mix local.hex --force && \
 
 WORKDIR /app
 
+CMD ["sbin", "init"]
+
