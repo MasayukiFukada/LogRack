@@ -4,7 +4,7 @@ DB で管理するモデルを検討する
 
 ```plantuml
 @startuml
-class "デバイス種別マスタ" as device_master {
+class "デバイス種別マスタ" as device_type {
     +ID : 数値
     +コード : 数値
     +名前 : 文字列
@@ -45,30 +45,30 @@ class "湿度" as humidity {
     +日時 : 日時
     +湿度_％ : 数値
 }
-class "明るさ" as light {
+class "明るさ" as illuminance {
     +ID : 数値
     +デバイスコード : 文字列
     +センサーコード : 文字列
     +日時 : 日時
     +照度_ : 数値
 }
-class "気圧" as hpa {
+class "気圧" as atmospheric_pressure {
     +ID : 数値
     +デバイスコード : 文字列
     +センサーコード : 文字列
     +日時 : 日時
     +圧力_hpa : 数値
 }
-class "N 軸IMU" as imu {
+class "N 軸IMU" as inertial_measurement_unit {
     +ID : 数値
     +デバイスコード : 文字列
     +センサーコード : 文字列
     +ピッチ : 数値
     +ロール : 数値
     +ヨー : 数値
-    +加速度_上下 : 数値
-    +加速度_左右 : 数値
-    +加速度_前後 : 数値
+    +加速度_X : 数値
+    +加速度_Y : 数値
+    +加速度_Z : 数値
 }
 class "マイク" as mic {
     +ID : 数値
@@ -77,19 +77,19 @@ class "マイク" as mic {
     +音量 : 数値
 }
 
-device_master -- device
+device_type -- device
 device_state -- device
 device -- temperature
 device -- mic
 device -- humidity
-device -- imu
-device -- hpa
-device -- light
+device -- inertial_measurement_unit
+device -- atmospheric_pressure
+device -- illuminance
 sensor -- temperature
 sensor -- mic
 sensor -- humidity
-sensor -- imu
-sensor -- hpa
-sensor -- light
+sensor -- inertial_measurement_unit
+sensor -- atmospheric_pressure
+sensor -- illuminance
 @enduml
 ```
