@@ -1,0 +1,18 @@
+<h1>Show Sound</h1>
+
+<ul>
+
+  <li>
+    <strong>Date:</strong>
+    <%= @sound.date %>
+  </li>
+
+  <li>
+    <strong>Value:</strong>
+    <%= @sound.value %>
+  </li>
+
+</ul>
+
+<span><%= link "Edit", to: Routes.sound_path(@conn, :edit, @sound) %></span>
+<span><%= link "Back", to: Routes.sound_path(@conn, :index) %></span>

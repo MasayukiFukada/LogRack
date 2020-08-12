@@ -1,0 +1,28 @@
+<h1>Listing Sounds</h1>
+
+<table>
+  <thead>
+    <tr>
+      <th>Date</th>
+      <th>Value</th>
+
+      <th></th>
+    </tr>
+  </thead>
+  <tbody>
+<%= for sound <- @sounds do %>
+    <tr>
+      <td><%= sound.date %></td>
+      <td><%= sound.value %></td>
+
+      <td>
+        <span><%= link "Show", to: Routes.sound_path(@conn, :show, sound) %></span>
+        <span><%= link "Edit", to: Routes.sound_path(@conn, :edit, sound) %></span>
+        <span><%= link "Delete", to: Routes.sound_path(@conn, :delete, sound), method: :delete, data: [confirm: "Are you sure?"] %></span>
+      </td>
+    </tr>
+<% end %>
+  </tbody>
+</table>
+
+<span><%= link "New Sound", to: Routes.sound_path(@conn, :new) %></span>

@@ -1,0 +1,38 @@
+<h1>Listing Inertial measurement units</h1>
+
+<table>
+  <thead>
+    <tr>
+      <th>Date</th>
+      <th>Pich</th>
+      <th>Roll</th>
+      <th>Yaw</th>
+      <th>X acceleration</th>
+      <th>Y acceleration</th>
+      <th>Z acceleration</th>
+
+      <th></th>
+    </tr>
+  </thead>
+  <tbody>
+<%= for inertial_measurement_unit <- @inertial_measurement_units do %>
+    <tr>
+      <td><%= inertial_measurement_unit.date %></td>
+      <td><%= inertial_measurement_unit.pich %></td>
+      <td><%= inertial_measurement_unit.roll %></td>
+      <td><%= inertial_measurement_unit.yaw %></td>
+      <td><%= inertial_measurement_unit.x_acceleration %></td>
+      <td><%= inertial_measurement_unit.y_acceleration %></td>
+      <td><%= inertial_measurement_unit.z_acceleration %></td>
+
+      <td>
+        <span><%= link "Show", to: Routes.inertial_measurement_unit_path(@conn, :show, inertial_measurement_unit) %></span>
+        <span><%= link "Edit", to: Routes.inertial_measurement_unit_path(@conn, :edit, inertial_measurement_unit) %></span>
+        <span><%= link "Delete", to: Routes.inertial_measurement_unit_path(@conn, :delete, inertial_measurement_unit), method: :delete, data: [confirm: "Are you sure?"] %></span>
+      </td>
+    </tr>
+<% end %>
+  </tbody>
+</table>
+
+<span><%= link "New Inertial measurement unit", to: Routes.inertial_measurement_unit_path(@conn, :new) %></span>

@@ -1,0 +1,18 @@
+<h1>Show Atmospheric pressure</h1>
+
+<ul>
+
+  <li>
+    <strong>Date:</strong>
+    <%= @atmospheric_pressure.date %>
+  </li>
+
+  <li>
+    <strong>Value:</strong>
+    <%= @atmospheric_pressure.value %>
+  </li>
+
+</ul>
+
+<span><%= link "Edit", to: Routes.atmospheric_pressure_path(@conn, :edit, @atmospheric_pressure) %></span>
+<span><%= link "Back", to: Routes.atmospheric_pressure_path(@conn, :index) %></span>

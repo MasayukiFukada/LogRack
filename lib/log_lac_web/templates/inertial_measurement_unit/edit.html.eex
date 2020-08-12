@@ -1,0 +1,5 @@
+<h1>Edit Inertial measurement unit</h1>
+
+<%= render "form.html", Map.put(assigns, :action, Routes.inertial_measurement_unit_path(@conn, :update, @inertial_measurement_unit)) %>
+
+<span><%= link "Back", to: Routes.inertial_measurement_unit_path(@conn, :index) %></span>

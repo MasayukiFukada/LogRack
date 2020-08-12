@@ -10,8 +10,8 @@ defmodule LogLac.InertialMeasurementUnit do
     field :y_acceleration, :integer
     field :yaw, :integer
     field :z_acceleration, :integer
-    field :device_code, :id
-    field :sensor_code, :id
+    field :device_code, :string
+    field :sensor_code, :string
 
     timestamps()
   end
@@ -20,6 +20,14 @@ defmodule LogLac.InertialMeasurementUnit do
   def changeset(inertial_measurement_unit, attrs) do
     inertial_measurement_unit
     |> cast(attrs, [:date, :pich, :roll, :yaw, :x_acceleration, :y_acceleration, :z_acceleration])
-    |> validate_required([:date, :pich, :roll, :yaw, :x_acceleration, :y_acceleration, :z_acceleration])
+    |> validate_required([
+      :date,
+      :pich,
+      :roll,
+      :yaw,
+      :x_acceleration,
+      :y_acceleration,
+      :z_acceleration
+    ])
   end
 end

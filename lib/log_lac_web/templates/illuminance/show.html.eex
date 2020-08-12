@@ -1,0 +1,18 @@
+<h1>Show Illuminance</h1>
+
+<ul>
+
+  <li>
+    <strong>Date:</strong>
+    <%= @illuminance.date %>
+  </li>
+
+  <li>
+    <strong>Value:</strong>
+    <%= @illuminance.value %>
+  </li>
+
+</ul>
+
+<span><%= link "Edit", to: Routes.illuminance_path(@conn, :edit, @illuminance) %></span>
+<span><%= link "Back", to: Routes.illuminance_path(@conn, :index) %></span>

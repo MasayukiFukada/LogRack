@@ -17,6 +17,17 @@ defmodule LogLacWeb.Router do
     pipe_through :browser
 
     get "/", PageController, :index
+
+    resources "/device_types", DeviceTypeController
+    resources "/devices", DeviceController
+    resources "/sensors", SensorController
+    resources "/device_statuses", DeviceStatusController
+    resources "/temperatures", TemperatureController
+    resources "/humidities", HumidityController
+    resources "/illuminances", IlluminanceController
+    resources "/atmospheric_pressures", AtmosphericPressureController
+    resources "/inertial_measurement_units", InertialMeasurementUnitController
+    resources "/sounds", SoundController
   end
 
   # Other scopes may use custom stacks.

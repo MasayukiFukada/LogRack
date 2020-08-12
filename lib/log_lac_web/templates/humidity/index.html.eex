@@ -1,0 +1,28 @@
+<h1>Listing Humidities</h1>
+
+<table>
+  <thead>
+    <tr>
+      <th>Date</th>
+      <th>Value</th>
+
+      <th></th>
+    </tr>
+  </thead>
+  <tbody>
+<%= for humidity <- @humidities do %>
+    <tr>
+      <td><%= humidity.date %></td>
+      <td><%= humidity.value %></td>
+
+      <td>
+        <span><%= link "Show", to: Routes.humidity_path(@conn, :show, humidity) %></span>
+        <span><%= link "Edit", to: Routes.humidity_path(@conn, :edit, humidity) %></span>
+        <span><%= link "Delete", to: Routes.humidity_path(@conn, :delete, humidity), method: :delete, data: [confirm: "Are you sure?"] %></span>
+      </td>
+    </tr>
+<% end %>
+  </tbody>
+</table>
+
+<span><%= link "New Humidity", to: Routes.humidity_path(@conn, :new) %></span>

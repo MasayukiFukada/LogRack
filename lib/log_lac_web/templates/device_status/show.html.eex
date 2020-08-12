@@ -1,0 +1,33 @@
+<h1>Show Device status</h1>
+
+<ul>
+
+  <li>
+    <strong>Wake on at:</strong>
+    <%= @device_status.wake_on_at %>
+  </li>
+
+  <li>
+    <strong>Cpu use rate:</strong>
+    <%= @device_status.cpu_use_rate %>
+  </li>
+
+  <li>
+    <strong>Memory use rate:</strong>
+    <%= @device_status.memory_use_rate %>
+  </li>
+
+  <li>
+    <strong>Temperature:</strong>
+    <%= @device_status.temperature %>
+  </li>
+
+  <li>
+    <strong>Storage:</strong>
+    <%= @device_status.storage %>
+  </li>
+
+</ul>
+
+<span><%= link "Edit", to: Routes.device_status_path(@conn, :edit, @device_status) %></span>
+<span><%= link "Back", to: Routes.device_status_path(@conn, :index) %></span>

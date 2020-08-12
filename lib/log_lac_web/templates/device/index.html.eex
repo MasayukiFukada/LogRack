@@ -1,0 +1,30 @@
+<h1>Listing Devices</h1>
+
+<table>
+  <thead>
+    <tr>
+      <th>Code</th>
+      <th>Name</th>
+      <th>Remarks</th>
+
+      <th></th>
+    </tr>
+  </thead>
+  <tbody>
+<%= for device <- @devices do %>
+    <tr>
+      <td><%= device.code %></td>
+      <td><%= device.name %></td>
+      <td><%= device.remarks %></td>
+
+      <td>
+        <span><%= link "Show", to: Routes.device_path(@conn, :show, device) %></span>
+        <span><%= link "Edit", to: Routes.device_path(@conn, :edit, device) %></span>
+        <span><%= link "Delete", to: Routes.device_path(@conn, :delete, device), method: :delete, data: [confirm: "Are you sure?"] %></span>
+      </td>
+    </tr>
+<% end %>
+  </tbody>
+</table>
+
+<span><%= link "New Device", to: Routes.device_path(@conn, :new) %></span>

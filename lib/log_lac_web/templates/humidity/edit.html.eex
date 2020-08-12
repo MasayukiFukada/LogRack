@@ -1,0 +1,5 @@
+<h1>Edit Humidity</h1>
+
+<%= render "form.html", Map.put(assigns, :action, Routes.humidity_path(@conn, :update, @humidity)) %>
+
+<span><%= link "Back", to: Routes.humidity_path(@conn, :index) %></span>

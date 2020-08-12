@@ -1,0 +1,28 @@
+<h1>Listing Temperatures</h1>
+
+<table>
+  <thead>
+    <tr>
+      <th>Date</th>
+      <th>Value</th>
+
+      <th></th>
+    </tr>
+  </thead>
+  <tbody>
+<%= for temperature <- @temperatures do %>
+    <tr>
+      <td><%= temperature.date %></td>
+      <td><%= temperature.value %></td>
+
+      <td>
+        <span><%= link "Show", to: Routes.temperature_path(@conn, :show, temperature) %></span>
+        <span><%= link "Edit", to: Routes.temperature_path(@conn, :edit, temperature) %></span>
+        <span><%= link "Delete", to: Routes.temperature_path(@conn, :delete, temperature), method: :delete, data: [confirm: "Are you sure?"] %></span>
+      </td>
+    </tr>
+<% end %>
+  </tbody>
+</table>
+
+<span><%= link "New Temperature", to: Routes.temperature_path(@conn, :new) %></span>

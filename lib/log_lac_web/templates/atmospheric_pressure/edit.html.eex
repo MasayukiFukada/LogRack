@@ -1,0 +1,5 @@
+<h1>Edit Atmospheric pressure</h1>
+
+<%= render "form.html", Map.put(assigns, :action, Routes.atmospheric_pressure_path(@conn, :update, @atmospheric_pressure)) %>
+
+<span><%= link "Back", to: Routes.atmospheric_pressure_path(@conn, :index) %></span>

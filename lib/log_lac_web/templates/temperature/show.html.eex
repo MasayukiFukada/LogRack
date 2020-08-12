@@ -1,0 +1,18 @@
+<h1>Show Temperature</h1>
+
+<ul>
+
+  <li>
+    <strong>Date:</strong>
+    <%= @temperature.date %>
+  </li>
+
+  <li>
+    <strong>Value:</strong>
+    <%= @temperature.value %>
+  </li>
+
+</ul>
+
+<span><%= link "Edit", to: Routes.temperature_path(@conn, :edit, @temperature) %></span>
+<span><%= link "Back", to: Routes.temperature_path(@conn, :index) %></span>

@@ -6,7 +6,7 @@ defmodule LogLac.Device do
     field :code, :string
     field :name, :string
     field :remarks, :string
-    field :type_code, :id
+    field :type_code, :string
 
     timestamps()
   end

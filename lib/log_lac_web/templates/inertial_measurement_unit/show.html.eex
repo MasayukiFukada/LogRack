@@ -1,0 +1,43 @@
+<h1>Show Inertial measurement unit</h1>
+
+<ul>
+
+  <li>
+    <strong>Date:</strong>
+    <%= @inertial_measurement_unit.date %>
+  </li>
+
+  <li>
+    <strong>Pich:</strong>
+    <%= @inertial_measurement_unit.pich %>
+  </li>
+
+  <li>
+    <strong>Roll:</strong>
+    <%= @inertial_measurement_unit.roll %>
+  </li>
+
+  <li>
+    <strong>Yaw:</strong>
+    <%= @inertial_measurement_unit.yaw %>
+  </li>
+
+  <li>
+    <strong>X acceleration:</strong>
+    <%= @inertial_measurement_unit.x_acceleration %>
+  </li>
+
+  <li>
+    <strong>Y acceleration:</strong>
+    <%= @inertial_measurement_unit.y_acceleration %>
+  </li>
+
+  <li>
+    <strong>Z acceleration:</strong>
+    <%= @inertial_measurement_unit.z_acceleration %>
+  </li>
+
+</ul>
+
+<span><%= link "Edit", to: Routes.inertial_measurement_unit_path(@conn, :edit, @inertial_measurement_unit) %></span>
+<span><%= link "Back", to: Routes.inertial_measurement_unit_path(@conn, :index) %></span>

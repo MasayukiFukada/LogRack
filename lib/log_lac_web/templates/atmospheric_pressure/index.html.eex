@@ -1,0 +1,28 @@
+<h1>Listing Atmospheric pressures</h1>
+
+<table>
+  <thead>
+    <tr>
+      <th>Date</th>
+      <th>Value</th>
+
+      <th></th>
+    </tr>
+  </thead>
+  <tbody>
+<%= for atmospheric_pressure <- @atmospheric_pressures do %>
+    <tr>
+      <td><%= atmospheric_pressure.date %></td>
+      <td><%= atmospheric_pressure.value %></td>
+
+      <td>
+        <span><%= link "Show", to: Routes.atmospheric_pressure_path(@conn, :show, atmospheric_pressure) %></span>
+        <span><%= link "Edit", to: Routes.atmospheric_pressure_path(@conn, :edit, atmospheric_pressure) %></span>
+        <span><%= link "Delete", to: Routes.atmospheric_pressure_path(@conn, :delete, atmospheric_pressure), method: :delete, data: [confirm: "Are you sure?"] %></span>
+      </td>
+    </tr>
+<% end %>
+  </tbody>
+</table>
+
+<span><%= link "New Atmospheric pressure", to: Routes.atmospheric_pressure_path(@conn, :new) %></span>

@@ -5,8 +5,8 @@ defmodule LogLac.Illuminance do
   schema "illuminances" do
     field :date, :utc_datetime
     field :value, :integer
-    field :device_code, :id
-    field :sensor_code, :id
+    field :device_code, :string
+    field :sensor_code, :string
 
     timestamps()
   end

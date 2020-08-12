@@ -1,0 +1,28 @@
+<h1>Listing Device types</h1>
+
+<table>
+  <thead>
+    <tr>
+      <th>Code</th>
+      <th>Name</th>
+
+      <th></th>
+    </tr>
+  </thead>
+  <tbody>
+<%= for device_type <- @device_types do %>
+    <tr>
+      <td><%= device_type.code %></td>
+      <td><%= device_type.name %></td>
+
+      <td>
+        <span><%= link "Show", to: Routes.device_type_path(@conn, :show, device_type) %></span>
+        <span><%= link "Edit", to: Routes.device_type_path(@conn, :edit, device_type) %></span>
+        <span><%= link "Delete", to: Routes.device_type_path(@conn, :delete, device_type), method: :delete, data: [confirm: "Are you sure?"] %></span>
+      </td>
+    </tr>
+<% end %>
+  </tbody>
+</table>
+
+<span><%= link "New Device type", to: Routes.device_type_path(@conn, :new) %></span>

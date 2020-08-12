@@ -1,0 +1,18 @@
+<h1>Show Humidity</h1>
+
+<ul>
+
+  <li>
+    <strong>Date:</strong>
+    <%= @humidity.date %>
+  </li>
+
+  <li>
+    <strong>Value:</strong>
+    <%= @humidity.value %>
+  </li>
+
+</ul>
+
+<span><%= link "Edit", to: Routes.humidity_path(@conn, :edit, @humidity) %></span>
+<span><%= link "Back", to: Routes.humidity_path(@conn, :index) %></span>

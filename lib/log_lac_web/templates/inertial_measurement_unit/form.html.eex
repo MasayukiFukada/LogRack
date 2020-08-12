@@ -1,0 +1,39 @@
+<%= form_for @changeset, @action, fn f -> %>
+  <%= if @changeset.action do %>
+    <div class="alert alert-danger">
+      <p>Oops, something went wrong! Please check the errors below.</p>
+    </div>
+  <% end %>
+
+  <%= label f, :date %>
+  <%= datetime_select f, :date %>
+  <%= error_tag f, :date %>
+
+  <%= label f, :pich %>
+  <%= number_input f, :pich %>
+  <%= error_tag f, :pich %>
+
+  <%= label f, :roll %>
+  <%= number_input f, :roll %>
+  <%= error_tag f, :roll %>
+
+  <%= label f, :yaw %>
+  <%= number_input f, :yaw %>
+  <%= error_tag f, :yaw %>
+
+  <%= label f, :x_acceleration %>
+  <%= number_input f, :x_acceleration %>
+  <%= error_tag f, :x_acceleration %>
+
+  <%= label f, :y_acceleration %>
+  <%= number_input f, :y_acceleration %>
+  <%= error_tag f, :y_acceleration %>
+
+  <%= label f, :z_acceleration %>
+  <%= number_input f, :z_acceleration %>
+  <%= error_tag f, :z_acceleration %>
+
+  <div>
+    <%= submit "Save" %>
+  </div>
+<% end %>

@@ -8,7 +8,7 @@ defmodule LogLac.DeviceStatus do
     field :storage, :integer
     field :temperature, :float
     field :wake_on_at, :utc_datetime
-    field :device_code, :id
+    field :device_code, :string
 
     timestamps()
   end

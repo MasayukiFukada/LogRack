@@ -1,0 +1,18 @@
+<h1>Show Device type</h1>
+
+<ul>
+
+  <li>
+    <strong>Code:</strong>
+    <%= @device_type.code %>
+  </li>
+
+  <li>
+    <strong>Name:</strong>
+    <%= @device_type.name %>
+  </li>
+
+</ul>
+
+<span><%= link "Edit", to: Routes.device_type_path(@conn, :edit, @device_type) %></span>
+<span><%= link "Back", to: Routes.device_type_path(@conn, :index) %></span>
