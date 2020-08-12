@@ -12,3 +12,6 @@
   - 例) mix phx.gen.schema Device devices code:string device_type:references:device_types
     - 外部キーも設定出来る
 - mix ecto.migrate
+- absinthe, absinthe_plug, poison のモジュールを追加
+  - GraphQL 関連
+  - [資料](https://qiita.com/piacerex/items/b4f57b55663403f9ec8e)
