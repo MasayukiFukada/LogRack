@@ -21,6 +21,10 @@ defmodule LogLac.Member do
     Repo.all(DeviceType)
   end
 
+  def find_device_types_by(code) do
+    Repo.get_by(DeviceType, code: code)
+  end
+
   @doc """
   Gets a single device_type.
 
@@ -117,6 +121,20 @@ defmodule LogLac.Member do
     Repo.all(Device)
   end
 
+  def list_devices_with_type do
+    Repo.all(Device)
+    |> Enum.map(fn(x) -> %{
+      :code => x.code,
+      :name => x.name,
+      :remarks => x.remarks,
+      :device_type => find_device_types_by(x.type_code)
+      } end)
+  end
+
+  def find_device_by(code) do
+    Repo.get_by(Device, code: code)
+  end
+
   @doc """
   Gets a single device.
 
@@ -211,6 +229,10 @@ defmodule LogLac.Member do
   """
   def list_sensors do
     Repo.all(Sensor)
+  end
+
+  def find_sensor_by(code) do
+    Repo.get_by(Sensor, code: code)
   end
 
   @doc """

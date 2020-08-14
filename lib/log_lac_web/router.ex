@@ -30,10 +30,15 @@ defmodule LogLacWeb.Router do
     resources "/sounds", SoundController
   end
 
-  # Other scopes may use custom stacks.
-  # scope "/api", LogLacWeb do
-  #   pipe_through :api
-  # end
+  scope "/api" do
+    pipe_through :api
+
+    forward "/graphiql", Absinthe.Plug.GraphiQL,
+      schema: LogLacWeb.Schema
+
+    forward "/", Absinthe.Plug,
+      schema: LogLacWeb.Schema
+  end
 
   # Enables LiveDashboard only for development
   #

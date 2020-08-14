@@ -4,6 +4,7 @@ defmodule LogLac.Measurement do
   """
 
   import Ecto.Query, warn: false
+  import LogLac.Member
   alias LogLac.Repo
 
   alias LogLac.Measurement.DeviceStatus
@@ -115,6 +116,16 @@ defmodule LogLac.Measurement do
   """
   def list_temperatures do
     Repo.all(Temperature)
+  end
+
+  def list_temperatures_filtered do
+    Repo.all(Temperature)
+    |> Enum.map(fn(x) -> %{
+      :date => x.date,
+      :value => x.value,
+      :device => find_device_by(x.device_code),
+      :sensor => find_sensor_by(x.sensor_code)
+      } end)
   end
 
   @doc """
