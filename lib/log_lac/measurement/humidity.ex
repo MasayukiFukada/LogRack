@@ -5,8 +5,8 @@ defmodule LogLac.Measurement.Humidity do
   schema "humidities" do
     field :date, :utc_datetime
     field :value, :integer
-    field :device_code, :id
-    field :sensor_code, :id
+    field :device_code, :string
+    field :sensor_code, :string
 
     timestamps()
   end
@@ -14,7 +14,7 @@ defmodule LogLac.Measurement.Humidity do
   @doc false
   def changeset(humidity, attrs) do
     humidity
-    |> cast(attrs, [:date, :value])
-    |> validate_required([:date, :value])
+    |> cast(attrs, [:date, :value, :device_code, :sensor_code])
+    |> validate_required([:date, :value, :device_code, :sensor_code])
   end
 end

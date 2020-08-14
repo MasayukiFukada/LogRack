@@ -15,3 +15,4 @@
 - absinthe, absinthe_plug, poison のモジュールを追加
   - GraphQL 関連
   - [資料](https://qiita.com/piacerex/items/b4f57b55663403f9ec8e)
+- プロジェクト_web/ の下に schema と resolvers ディレクトリを作成する

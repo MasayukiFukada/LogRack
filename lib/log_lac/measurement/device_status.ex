@@ -8,7 +8,7 @@ defmodule LogLac.Measurement.DeviceStatus do
     field :storage, :integer
     field :temperature, :float
     field :wake_on_at, :utc_datetime
-    field :device_code, :id
+    field :device_code, :string
 
     timestamps()
   end
@@ -16,7 +16,7 @@ defmodule LogLac.Measurement.DeviceStatus do
   @doc false
   def changeset(device_status, attrs) do
     device_status
-    |> cast(attrs, [:wake_on_at, :cpu_use_rate, :memory_use_rate, :temperature, :storage])
-    |> validate_required([:wake_on_at, :cpu_use_rate, :memory_use_rate, :temperature, :storage])
+    |> cast(attrs, [:wake_on_at, :cpu_use_rate, :memory_use_rate, :temperature, :storage, :device_code])
+    |> validate_required([:wake_on_at, :cpu_use_rate, :memory_use_rate, :temperature, :storage, :device_code])
   end
 end

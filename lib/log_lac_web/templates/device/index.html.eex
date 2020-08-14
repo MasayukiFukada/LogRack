@@ -6,6 +6,7 @@
       <th>Code</th>
       <th>Name</th>
       <th>Remarks</th>
+      <th>TypeCode</th>
 
       <th></th>
     </tr>
@@ -16,6 +17,7 @@
       <td><%= device.code %></td>
       <td><%= device.name %></td>
       <td><%= device.remarks %></td>
+      <td><%= device.type_code %></td>
 
       <td>
         <span><%= link "Show", to: Routes.device_path(@conn, :show, device) %></span>

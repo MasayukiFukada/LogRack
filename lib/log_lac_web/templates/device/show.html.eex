@@ -17,6 +17,11 @@
     <%= @device.remarks %>
   </li>
 
+  <li>
+    <strong>Type Code:</strong>
+    <%= @device.type_code %>
+  </li>
+
 </ul>
 
 <span><%= link "Edit", to: Routes.device_path(@conn, :edit, @device) %></span>

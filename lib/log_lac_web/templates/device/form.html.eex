@@ -17,6 +17,10 @@
   <%= text_input f, :remarks %>
   <%= error_tag f, :remarks %>
 
+  <%= label f, :type_code %>
+  <%= text_input f, :type_code %>
+  <%= error_tag f, :type_code %>
+
   <div>
     <%= submit "Save" %>
   </div>
