@@ -15,4 +15,7 @@
 - absinthe, absinthe_plug, poison のモジュールを追加
   - GraphQL 関連
   - [資料](https://qiita.com/piacerex/items/b4f57b55663403f9ec8e)
-- プロジェクト_web/ の下に schema と resolvers ディレクトリを作成する
+- プロジェクト\_web/ の下に schema と resolvers ディレクトリを作成する
+  - schema/schema.ex に query などを定義
+  - schema/content_types.ex に返り値の型を定義
+  - resolvers/content.ex にリゾルバを設定

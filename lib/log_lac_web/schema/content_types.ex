@@ -35,6 +35,26 @@ defmodule LogLacWeb.Schema.ContentTypes do
     field :remarks, :string
   end
 
+  object :device_status do
+    @desc "CPU の使用率"
+    field :cpu_use_rate, :integer
+
+    @desc "メモリーの使用率"
+    field :memory_use_rate, :integer
+
+    @desc "ストレージの残り容量(MByte)"
+    field :storage, :integer
+
+    @desc "温度(℃)"
+    field :temperature, :float
+
+    @desc "起動日時"
+    field :wake_on_at, :datetime
+
+    @desc "デバイス"
+    field :device, :device
+  end
+
   object :temperature do
     @desc "測定日"
     field :date, :datetime
