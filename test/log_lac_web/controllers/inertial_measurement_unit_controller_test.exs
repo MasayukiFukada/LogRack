@@ -2,12 +2,42 @@ defmodule LogLacWeb.InertialMeasurementUnitControllerTest do
   use LogLacWeb.ConnCase
 
   alias LogLac.Measurement
+  import LogLac.TestData
 
-  @create_attrs %{date: "2010-04-17T14:00:00Z", pich: 42, roll: 42, x_acceleration: 42, y_acceleration: 42, yaw: 42, z_acceleration: 42}
-  @update_attrs %{date: "2011-05-18T15:01:01Z", pich: 43, roll: 43, x_acceleration: 43, y_acceleration: 43, yaw: 43, z_acceleration: 43}
-  @invalid_attrs %{date: nil, pich: nil, roll: nil, x_acceleration: nil, y_acceleration: nil, yaw: nil, z_acceleration: nil}
+  @create_attrs %{
+    date: "2010-04-17T14:00:00Z",
+    pich: 42,
+    roll: 42,
+    x_acceleration: 42,
+    y_acceleration: 42,
+    yaw: 42,
+    z_acceleration: 42,
+    device_code: "d1",
+    sensor_code: "s1"
+  }
+  @update_attrs %{
+    date: "2011-05-18T15:01:01Z",
+    pich: 43,
+    roll: 43,
+    x_acceleration: 43,
+    y_acceleration: 43,
+    yaw: 43,
+    z_acceleration: 43,
+    device_code: "d2",
+    sensor_code: "s2"
+  }
+  @invalid_attrs %{
+    date: nil,
+    pich: nil,
+    roll: nil,
+    x_acceleration: nil,
+    y_acceleration: nil,
+    yaw: nil,
+    z_acceleration: nil
+  }
 
   def fixture(:inertial_measurement_unit) do
+    setup_fixture()
     {:ok, inertial_measurement_unit} = Measurement.create_inertial_measurement_unit(@create_attrs)
     inertial_measurement_unit
   end
@@ -28,7 +58,12 @@ defmodule LogLacWeb.InertialMeasurementUnitControllerTest do
 
   describe "create inertial_measurement_unit" do
     test "redirects to show when data is valid", %{conn: conn} do
-      conn = post(conn, Routes.inertial_measurement_unit_path(conn, :create), inertial_measurement_unit: @create_attrs)
+      setup_fixture()
+
+      conn =
+        post(conn, Routes.inertial_measurement_unit_path(conn, :create),
+          inertial_measurement_unit: @create_attrs
+        )
 
       assert %{id: id} = redirected_params(conn)
       assert redirected_to(conn) == Routes.inertial_measurement_unit_path(conn, :show, id)
@@ -38,7 +73,11 @@ defmodule LogLacWeb.InertialMeasurementUnitControllerTest do
     end
 
     test "renders errors when data is invalid", %{conn: conn} do
-      conn = post(conn, Routes.inertial_measurement_unit_path(conn, :create), inertial_measurement_unit: @invalid_attrs)
+      conn =
+        post(conn, Routes.inertial_measurement_unit_path(conn, :create),
+          inertial_measurement_unit: @invalid_attrs
+        )
+
       assert html_response(conn, 200) =~ "New Inertial measurement unit"
     end
   end
@@ -46,8 +85,13 @@ defmodule LogLacWeb.InertialMeasurementUnitControllerTest do
   describe "edit inertial_measurement_unit" do
     setup [:create_inertial_measurement_unit]
 
-    test "renders form for editing chosen inertial_measurement_unit", %{conn: conn, inertial_measurement_unit: inertial_measurement_unit} do
-      conn = get(conn, Routes.inertial_measurement_unit_path(conn, :edit, inertial_measurement_unit))
+    test "renders form for editing chosen inertial_measurement_unit", %{
+      conn: conn,
+      inertial_measurement_unit: inertial_measurement_unit
+    } do
+      conn =
+        get(conn, Routes.inertial_measurement_unit_path(conn, :edit, inertial_measurement_unit))
+
       assert html_response(conn, 200) =~ "Edit Inertial measurement unit"
     end
   end
@@ -55,16 +99,33 @@ defmodule LogLacWeb.InertialMeasurementUnitControllerTest do
   describe "update inertial_measurement_unit" do
     setup [:create_inertial_measurement_unit]
 
-    test "redirects when data is valid", %{conn: conn, inertial_measurement_unit: inertial_measurement_unit} do
-      conn = put(conn, Routes.inertial_measurement_unit_path(conn, :update, inertial_measurement_unit), inertial_measurement_unit: @update_attrs)
-      assert redirected_to(conn) == Routes.inertial_measurement_unit_path(conn, :show, inertial_measurement_unit)
+    test "redirects when data is valid", %{
+      conn: conn,
+      inertial_measurement_unit: inertial_measurement_unit
+    } do
+      conn =
+        put(conn, Routes.inertial_measurement_unit_path(conn, :update, inertial_measurement_unit),
+          inertial_measurement_unit: @update_attrs
+        )
 
-      conn = get(conn, Routes.inertial_measurement_unit_path(conn, :show, inertial_measurement_unit))
+      assert redirected_to(conn) ==
+               Routes.inertial_measurement_unit_path(conn, :show, inertial_measurement_unit)
+
+      conn =
+        get(conn, Routes.inertial_measurement_unit_path(conn, :show, inertial_measurement_unit))
+
       assert html_response(conn, 200)
     end
 
-    test "renders errors when data is invalid", %{conn: conn, inertial_measurement_unit: inertial_measurement_unit} do
-      conn = put(conn, Routes.inertial_measurement_unit_path(conn, :update, inertial_measurement_unit), inertial_measurement_unit: @invalid_attrs)
+    test "renders errors when data is invalid", %{
+      conn: conn,
+      inertial_measurement_unit: inertial_measurement_unit
+    } do
+      conn =
+        put(conn, Routes.inertial_measurement_unit_path(conn, :update, inertial_measurement_unit),
+          inertial_measurement_unit: @invalid_attrs
+        )
+
       assert html_response(conn, 200) =~ "Edit Inertial measurement unit"
     end
   end
@@ -72,9 +133,18 @@ defmodule LogLacWeb.InertialMeasurementUnitControllerTest do
   describe "delete inertial_measurement_unit" do
     setup [:create_inertial_measurement_unit]
 
-    test "deletes chosen inertial_measurement_unit", %{conn: conn, inertial_measurement_unit: inertial_measurement_unit} do
-      conn = delete(conn, Routes.inertial_measurement_unit_path(conn, :delete, inertial_measurement_unit))
+    test "deletes chosen inertial_measurement_unit", %{
+      conn: conn,
+      inertial_measurement_unit: inertial_measurement_unit
+    } do
+      conn =
+        delete(
+          conn,
+          Routes.inertial_measurement_unit_path(conn, :delete, inertial_measurement_unit)
+        )
+
       assert redirected_to(conn) == Routes.inertial_measurement_unit_path(conn, :index)
+
       assert_error_sent 404, fn ->
         get(conn, Routes.inertial_measurement_unit_path(conn, :show, inertial_measurement_unit))
       end

@@ -6,8 +6,8 @@ defmodule LogLac.MemberTest do
   describe "device_types" do
     alias LogLac.Member.DeviceType
 
-    @valid_attrs %{code: "some code", name: "some name"}
-    @update_attrs %{code: "some updated code", name: "some updated name"}
+    @valid_attrs %{code: "t1", name: "some name"}
+    @update_attrs %{code: "t2", name: "some updated name"}
     @invalid_attrs %{code: nil, name: nil}
 
     def device_type_fixture(attrs \\ %{}) do
@@ -17,6 +17,13 @@ defmodule LogLac.MemberTest do
         |> Member.create_device_type()
 
       device_type
+    end
+
+    # 既存データ用の追加
+    def device_type_fixture_appendix(attrs \\ %{}) do
+      attrs
+      |> Enum.into(@update_attrs)
+      |> Member.create_device_type()
     end
 
     test "list_device_types/0 returns all device_types" do
@@ -31,7 +38,7 @@ defmodule LogLac.MemberTest do
 
     test "create_device_type/1 with valid data creates a device_type" do
       assert {:ok, %DeviceType{} = device_type} = Member.create_device_type(@valid_attrs)
-      assert device_type.code == "some code"
+      assert device_type.code == "t1"
       assert device_type.name == "some name"
     end
 
@@ -41,8 +48,11 @@ defmodule LogLac.MemberTest do
 
     test "update_device_type/2 with valid data updates the device_type" do
       device_type = device_type_fixture()
-      assert {:ok, %DeviceType{} = device_type} = Member.update_device_type(device_type, @update_attrs)
-      assert device_type.code == "some updated code"
+
+      assert {:ok, %DeviceType{} = device_type} =
+               Member.update_device_type(device_type, @update_attrs)
+
+      assert device_type.code == "t2"
       assert device_type.name == "some updated name"
     end
 
@@ -67,9 +77,14 @@ defmodule LogLac.MemberTest do
   describe "devices" do
     alias LogLac.Member.Device
 
-    @valid_attrs %{code: "some code", name: "some name", remarks: "some remarks"}
-    @update_attrs %{code: "some updated code", name: "some updated name", remarks: "some updated remarks"}
-    @invalid_attrs %{code: nil, name: nil, remarks: nil}
+    @valid_attrs %{code: "some code", name: "some name", remarks: "some remarks", type_code: "t1"}
+    @update_attrs %{
+      code: "some updated code",
+      name: "some updated name",
+      remarks: "some updated remarks",
+      type_code: "t2"
+    }
+    @invalid_attrs %{code: nil, name: nil, remarks: nil, type_code: nil}
 
     def device_fixture(attrs \\ %{}) do
       {:ok, device} =
@@ -81,16 +96,20 @@ defmodule LogLac.MemberTest do
     end
 
     test "list_devices/0 returns all devices" do
+      device_type_fixture()
       device = device_fixture()
       assert Member.list_devices() == [device]
     end
 
     test "get_device!/1 returns the device with given id" do
+      device_type_fixture()
       device = device_fixture()
       assert Member.get_device!(device.id) == device
     end
 
     test "create_device/1 with valid data creates a device" do
+      device_type_fixture()
+      device_type_fixture_appendix()
       assert {:ok, %Device{} = device} = Member.create_device(@valid_attrs)
       assert device.code == "some code"
       assert device.name == "some name"
@@ -102,6 +121,8 @@ defmodule LogLac.MemberTest do
     end
 
     test "update_device/2 with valid data updates the device" do
+      device_type_fixture()
+      device_type_fixture_appendix()
       device = device_fixture()
       assert {:ok, %Device{} = device} = Member.update_device(device, @update_attrs)
       assert device.code == "some updated code"
@@ -110,18 +131,21 @@ defmodule LogLac.MemberTest do
     end
 
     test "update_device/2 with invalid data returns error changeset" do
+      device_type_fixture()
       device = device_fixture()
       assert {:error, %Ecto.Changeset{}} = Member.update_device(device, @invalid_attrs)
       assert device == Member.get_device!(device.id)
     end
 
     test "delete_device/1 deletes the device" do
+      device_type_fixture()
       device = device_fixture()
       assert {:ok, %Device{}} = Member.delete_device(device)
       assert_raise Ecto.NoResultsError, fn -> Member.get_device!(device.id) end
     end
 
     test "change_device/1 returns a device changeset" do
+      device_type_fixture()
       device = device_fixture()
       assert %Ecto.Changeset{} = Member.change_device(device)
     end
@@ -131,7 +155,11 @@ defmodule LogLac.MemberTest do
     alias LogLac.Member.Sensor
 
     @valid_attrs %{code: "some code", name: "some name", remarks: "some remarks"}
-    @update_attrs %{code: "some updated code", name: "some updated name", remarks: "some updated remarks"}
+    @update_attrs %{
+      code: "some updated code",
+      name: "some updated name",
+      remarks: "some updated remarks"
+    }
     @invalid_attrs %{code: nil, name: nil, remarks: nil}
 
     def sensor_fixture(attrs \\ %{}) do

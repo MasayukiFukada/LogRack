@@ -2,12 +2,14 @@ defmodule LogLacWeb.SoundControllerTest do
   use LogLacWeb.ConnCase
 
   alias LogLac.Measurement
+  import LogLac.TestData
 
-  @create_attrs %{date: "2010-04-17T14:00:00Z", value: 42}
-  @update_attrs %{date: "2011-05-18T15:01:01Z", value: 43}
+  @create_attrs %{date: "2010-04-17T14:00:00Z", value: 42, device_code: "d1", sensor_code: "s1"}
+  @update_attrs %{date: "2011-05-18T15:01:01Z", value: 43, device_code: "d2", sensor_code: "s2"}
   @invalid_attrs %{date: nil, value: nil}
 
   def fixture(:sound) do
+    setup_fixture()
     {:ok, sound} = Measurement.create_sound(@create_attrs)
     sound
   end
@@ -28,6 +30,7 @@ defmodule LogLacWeb.SoundControllerTest do
 
   describe "create sound" do
     test "redirects to show when data is valid", %{conn: conn} do
+      setup_fixture()
       conn = post(conn, Routes.sound_path(conn, :create), sound: @create_attrs)
 
       assert %{id: id} = redirected_params(conn)
@@ -75,6 +78,7 @@ defmodule LogLacWeb.SoundControllerTest do
     test "deletes chosen sound", %{conn: conn, sound: sound} do
       conn = delete(conn, Routes.sound_path(conn, :delete, sound))
       assert redirected_to(conn) == Routes.sound_path(conn, :index)
+
       assert_error_sent 404, fn ->
         get(conn, Routes.sound_path(conn, :show, sound))
       end

@@ -2,12 +2,14 @@ defmodule LogLacWeb.HumidityControllerTest do
   use LogLacWeb.ConnCase
 
   alias LogLac.Measurement
+  import LogLac.TestData
 
-  @create_attrs %{date: "2010-04-17T14:00:00Z", value: 42}
-  @update_attrs %{date: "2011-05-18T15:01:01Z", value: 43}
+  @create_attrs %{date: "2010-04-17T14:00:00Z", value: 42, device_code: "d1", sensor_code: "s1"}
+  @update_attrs %{date: "2011-05-18T15:01:01Z", value: 43, device_code: "d2", sensor_code: "s2"}
   @invalid_attrs %{date: nil, value: nil}
 
   def fixture(:humidity) do
+    setup_fixture()
     {:ok, humidity} = Measurement.create_humidity(@create_attrs)
     humidity
   end
@@ -28,6 +30,7 @@ defmodule LogLacWeb.HumidityControllerTest do
 
   describe "create humidity" do
     test "redirects to show when data is valid", %{conn: conn} do
+      setup_fixture()
       conn = post(conn, Routes.humidity_path(conn, :create), humidity: @create_attrs)
 
       assert %{id: id} = redirected_params(conn)
@@ -75,6 +78,7 @@ defmodule LogLacWeb.HumidityControllerTest do
     test "deletes chosen humidity", %{conn: conn, humidity: humidity} do
       conn = delete(conn, Routes.humidity_path(conn, :delete, humidity))
       assert redirected_to(conn) == Routes.humidity_path(conn, :index)
+
       assert_error_sent 404, fn ->
         get(conn, Routes.humidity_path(conn, :show, humidity))
       end

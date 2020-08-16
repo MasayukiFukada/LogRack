@@ -1,0 +1,42 @@
+{
+    // See https://go.microsoft.com/fwlink/?LinkId=733558
+    // for the documentation about the tasks.json format
+    "version": "2.0.0",
+    "command": "mix",
+    "isShellCommand": true,
+    "showOutput": "always",
+    "tasks": [
+        {
+            "taskName": "test current",
+            // Assign this task as "Test Task". Ctrl+Shift+T (default) to run.
+            "isTestCommand": true,
+            "suppressTaskName": true,
+            "args": [
+                "test",
+                "${file}"
+            ],
+            "echoCommand": true,
+            "problemMatcher": {
+                "owner": "elixir",
+                "fileLocation": [
+                    "relative",
+                    "${workspaceRoot}"
+                ],
+                "pattern": [
+                    {
+                        "regexp": "\\s*\\d+\\).*\\(.*\\)$"
+                    },
+                    {
+                        "regexp": "\\s+([^:]*):(\\d*)$",
+                        "file": 1,
+                        "line": 2
+                    },
+                    {
+                        "regexp": "^\\s+(.*)$",
+                        "message": 1
+                    }
+                ]
+            }
+        }
+    ]
+}

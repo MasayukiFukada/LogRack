@@ -2,12 +2,14 @@ defmodule LogLacWeb.IlluminanceControllerTest do
   use LogLacWeb.ConnCase
 
   alias LogLac.Measurement
+  import LogLac.TestData
 
-  @create_attrs %{date: "2010-04-17T14:00:00Z", value: 42}
-  @update_attrs %{date: "2011-05-18T15:01:01Z", value: 43}
+  @create_attrs %{date: "2010-04-17T14:00:00Z", value: 42, device_code: "d1", sensor_code: "s1"}
+  @update_attrs %{date: "2011-05-18T15:01:01Z", value: 43, device_code: "d2", sensor_code: "s2"}
   @invalid_attrs %{date: nil, value: nil}
 
   def fixture(:illuminance) do
+    setup_fixture()
     {:ok, illuminance} = Measurement.create_illuminance(@create_attrs)
     illuminance
   end
@@ -28,6 +30,7 @@ defmodule LogLacWeb.IlluminanceControllerTest do
 
   describe "create illuminance" do
     test "redirects to show when data is valid", %{conn: conn} do
+      setup_fixture()
       conn = post(conn, Routes.illuminance_path(conn, :create), illuminance: @create_attrs)
 
       assert %{id: id} = redirected_params(conn)
@@ -56,7 +59,9 @@ defmodule LogLacWeb.IlluminanceControllerTest do
     setup [:create_illuminance]
 
     test "redirects when data is valid", %{conn: conn, illuminance: illuminance} do
-      conn = put(conn, Routes.illuminance_path(conn, :update, illuminance), illuminance: @update_attrs)
+      conn =
+        put(conn, Routes.illuminance_path(conn, :update, illuminance), illuminance: @update_attrs)
+
       assert redirected_to(conn) == Routes.illuminance_path(conn, :show, illuminance)
 
       conn = get(conn, Routes.illuminance_path(conn, :show, illuminance))
@@ -64,7 +69,9 @@ defmodule LogLacWeb.IlluminanceControllerTest do
     end
 
     test "renders errors when data is invalid", %{conn: conn, illuminance: illuminance} do
-      conn = put(conn, Routes.illuminance_path(conn, :update, illuminance), illuminance: @invalid_attrs)
+      conn =
+        put(conn, Routes.illuminance_path(conn, :update, illuminance), illuminance: @invalid_attrs)
+
       assert html_response(conn, 200) =~ "Edit Illuminance"
     end
   end
@@ -75,6 +82,7 @@ defmodule LogLacWeb.IlluminanceControllerTest do
     test "deletes chosen illuminance", %{conn: conn, illuminance: illuminance} do
       conn = delete(conn, Routes.illuminance_path(conn, :delete, illuminance))
       assert redirected_to(conn) == Routes.illuminance_path(conn, :index)
+
       assert_error_sent 404, fn ->
         get(conn, Routes.illuminance_path(conn, :show, illuminance))
       end

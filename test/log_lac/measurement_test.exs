@@ -2,15 +2,39 @@ defmodule LogLac.MeasurementTest do
   use LogLac.DataCase
 
   alias LogLac.Measurement
+  import LogLac.TestData
 
   describe "device_statuses" do
     alias LogLac.Measurement.DeviceStatus
 
-    @valid_attrs %{cpu_use_rate: 42, memory_use_rate: 42, storage: 42, temperature: 120.5, wake_on_at: "2010-04-17T14:00:00Z"}
-    @update_attrs %{cpu_use_rate: 43, memory_use_rate: 43, storage: 43, temperature: 456.7, wake_on_at: "2011-05-18T15:01:01Z"}
-    @invalid_attrs %{cpu_use_rate: nil, memory_use_rate: nil, storage: nil, temperature: nil, wake_on_at: nil}
+    @valid_attrs %{
+      cpu_use_rate: 42,
+      memory_use_rate: 42,
+      storage: 42,
+      temperature: 120.5,
+      wake_on_at: "2010-04-17T14:00:00Z",
+      device_code: "d1"
+    }
+    @update_attrs %{
+      cpu_use_rate: 43,
+      memory_use_rate: 43,
+      storage: 43,
+      temperature: 456.7,
+      wake_on_at: "2011-05-18T15:01:01Z",
+      device_code: "d2"
+    }
+    @invalid_attrs %{
+      cpu_use_rate: nil,
+      memory_use_rate: nil,
+      storage: nil,
+      temperature: nil,
+      wake_on_at: nil,
+      device_code: nil
+    }
 
     def device_status_fixture(attrs \\ %{}) do
+      setup_fixture()
+
       {:ok, device_status} =
         attrs
         |> Enum.into(@valid_attrs)
@@ -30,7 +54,11 @@ defmodule LogLac.MeasurementTest do
     end
 
     test "create_device_status/1 with valid data creates a device_status" do
-      assert {:ok, %DeviceStatus{} = device_status} = Measurement.create_device_status(@valid_attrs)
+      setup_fixture()
+
+      assert {:ok, %DeviceStatus{} = device_status} =
+               Measurement.create_device_status(@valid_attrs)
+
       assert device_status.cpu_use_rate == 42
       assert device_status.memory_use_rate == 42
       assert device_status.storage == 42
@@ -44,7 +72,10 @@ defmodule LogLac.MeasurementTest do
 
     test "update_device_status/2 with valid data updates the device_status" do
       device_status = device_status_fixture()
-      assert {:ok, %DeviceStatus{} = device_status} = Measurement.update_device_status(device_status, @update_attrs)
+
+      assert {:ok, %DeviceStatus{} = device_status} =
+               Measurement.update_device_status(device_status, @update_attrs)
+
       assert device_status.cpu_use_rate == 43
       assert device_status.memory_use_rate == 43
       assert device_status.storage == 43
@@ -54,7 +85,10 @@ defmodule LogLac.MeasurementTest do
 
     test "update_device_status/2 with invalid data returns error changeset" do
       device_status = device_status_fixture()
-      assert {:error, %Ecto.Changeset{}} = Measurement.update_device_status(device_status, @invalid_attrs)
+
+      assert {:error, %Ecto.Changeset{}} =
+               Measurement.update_device_status(device_status, @invalid_attrs)
+
       assert device_status == Measurement.get_device_status!(device_status.id)
     end
 
@@ -73,11 +107,23 @@ defmodule LogLac.MeasurementTest do
   describe "temperatures" do
     alias LogLac.Measurement.Temperature
 
-    @valid_attrs %{date: "2010-04-17T14:00:00Z", value: 120.5}
-    @update_attrs %{date: "2011-05-18T15:01:01Z", value: 456.7}
+    @valid_attrs %{
+      date: "2010-04-17T14:00:00Z",
+      value: 120.5,
+      device_code: "d1",
+      sensor_code: "s1"
+    }
+    @update_attrs %{
+      date: "2011-05-18T15:01:01Z",
+      value: 456.7,
+      device_code: "d2",
+      sensor_code: "s2"
+    }
     @invalid_attrs %{date: nil, value: nil}
 
     def temperature_fixture(attrs \\ %{}) do
+      setup_fixture()
+
       {:ok, temperature} =
         attrs
         |> Enum.into(@valid_attrs)
@@ -97,6 +143,7 @@ defmodule LogLac.MeasurementTest do
     end
 
     test "create_temperature/1 with valid data creates a temperature" do
+      setup_fixture()
       assert {:ok, %Temperature{} = temperature} = Measurement.create_temperature(@valid_attrs)
       assert temperature.date == DateTime.from_naive!(~N[2010-04-17T14:00:00Z], "Etc/UTC")
       assert temperature.value == 120.5
@@ -108,14 +155,20 @@ defmodule LogLac.MeasurementTest do
 
     test "update_temperature/2 with valid data updates the temperature" do
       temperature = temperature_fixture()
-      assert {:ok, %Temperature{} = temperature} = Measurement.update_temperature(temperature, @update_attrs)
+
+      assert {:ok, %Temperature{} = temperature} =
+               Measurement.update_temperature(temperature, @update_attrs)
+
       assert temperature.date == DateTime.from_naive!(~N[2011-05-18T15:01:01Z], "Etc/UTC")
       assert temperature.value == 456.7
     end
 
     test "update_temperature/2 with invalid data returns error changeset" do
       temperature = temperature_fixture()
-      assert {:error, %Ecto.Changeset{}} = Measurement.update_temperature(temperature, @invalid_attrs)
+
+      assert {:error, %Ecto.Changeset{}} =
+               Measurement.update_temperature(temperature, @invalid_attrs)
+
       assert temperature == Measurement.get_temperature!(temperature.id)
     end
 
@@ -134,11 +187,13 @@ defmodule LogLac.MeasurementTest do
   describe "humidities" do
     alias LogLac.Measurement.Humidity
 
-    @valid_attrs %{date: "2010-04-17T14:00:00Z", value: 42}
-    @update_attrs %{date: "2011-05-18T15:01:01Z", value: 43}
+    @valid_attrs %{date: "2010-04-17T14:00:00Z", value: 42, device_code: "d1", sensor_code: "s1"}
+    @update_attrs %{date: "2011-05-18T15:01:01Z", value: 43, device_code: "d2", sensor_code: "s2"}
     @invalid_attrs %{date: nil, value: nil}
 
     def humidity_fixture(attrs \\ %{}) do
+      setup_fixture()
+
       {:ok, humidity} =
         attrs
         |> Enum.into(@valid_attrs)
@@ -158,6 +213,7 @@ defmodule LogLac.MeasurementTest do
     end
 
     test "create_humidity/1 with valid data creates a humidity" do
+      setup_fixture()
       assert {:ok, %Humidity{} = humidity} = Measurement.create_humidity(@valid_attrs)
       assert humidity.date == DateTime.from_naive!(~N[2010-04-17T14:00:00Z], "Etc/UTC")
       assert humidity.value == 42
@@ -195,11 +251,13 @@ defmodule LogLac.MeasurementTest do
   describe "illuminances" do
     alias LogLac.Measurement.Illuminance
 
-    @valid_attrs %{date: "2010-04-17T14:00:00Z", value: 42}
-    @update_attrs %{date: "2011-05-18T15:01:01Z", value: 43}
+    @valid_attrs %{date: "2010-04-17T14:00:00Z", value: 42, device_code: "d1", sensor_code: "s1"}
+    @update_attrs %{date: "2011-05-18T15:01:01Z", value: 43, device_code: "d2", sensor_code: "s2"}
     @invalid_attrs %{date: nil, value: nil}
 
     def illuminance_fixture(attrs \\ %{}) do
+      setup_fixture()
+
       {:ok, illuminance} =
         attrs
         |> Enum.into(@valid_attrs)
@@ -219,6 +277,7 @@ defmodule LogLac.MeasurementTest do
     end
 
     test "create_illuminance/1 with valid data creates a illuminance" do
+      setup_fixture()
       assert {:ok, %Illuminance{} = illuminance} = Measurement.create_illuminance(@valid_attrs)
       assert illuminance.date == DateTime.from_naive!(~N[2010-04-17T14:00:00Z], "Etc/UTC")
       assert illuminance.value == 42
@@ -230,14 +289,20 @@ defmodule LogLac.MeasurementTest do
 
     test "update_illuminance/2 with valid data updates the illuminance" do
       illuminance = illuminance_fixture()
-      assert {:ok, %Illuminance{} = illuminance} = Measurement.update_illuminance(illuminance, @update_attrs)
+
+      assert {:ok, %Illuminance{} = illuminance} =
+               Measurement.update_illuminance(illuminance, @update_attrs)
+
       assert illuminance.date == DateTime.from_naive!(~N[2011-05-18T15:01:01Z], "Etc/UTC")
       assert illuminance.value == 43
     end
 
     test "update_illuminance/2 with invalid data returns error changeset" do
       illuminance = illuminance_fixture()
-      assert {:error, %Ecto.Changeset{}} = Measurement.update_illuminance(illuminance, @invalid_attrs)
+
+      assert {:error, %Ecto.Changeset{}} =
+               Measurement.update_illuminance(illuminance, @invalid_attrs)
+
       assert illuminance == Measurement.get_illuminance!(illuminance.id)
     end
 
@@ -256,11 +321,13 @@ defmodule LogLac.MeasurementTest do
   describe "atmospheric_pressures" do
     alias LogLac.Measurement.AtmosphericPressure
 
-    @valid_attrs %{date: "2010-04-17T14:00:00Z", value: 42}
-    @update_attrs %{date: "2011-05-18T15:01:01Z", value: 43}
+    @valid_attrs %{date: "2010-04-17T14:00:00Z", value: 42, device_code: "d1", sensor_code: "s1"}
+    @update_attrs %{date: "2011-05-18T15:01:01Z", value: 43, device_code: "d2", sensor_code: "s2"}
     @invalid_attrs %{date: nil, value: nil}
 
     def atmospheric_pressure_fixture(attrs \\ %{}) do
+      setup_fixture()
+
       {:ok, atmospheric_pressure} =
         attrs
         |> Enum.into(@valid_attrs)
@@ -276,12 +343,20 @@ defmodule LogLac.MeasurementTest do
 
     test "get_atmospheric_pressure!/1 returns the atmospheric_pressure with given id" do
       atmospheric_pressure = atmospheric_pressure_fixture()
-      assert Measurement.get_atmospheric_pressure!(atmospheric_pressure.id) == atmospheric_pressure
+
+      assert Measurement.get_atmospheric_pressure!(atmospheric_pressure.id) ==
+               atmospheric_pressure
     end
 
     test "create_atmospheric_pressure/1 with valid data creates a atmospheric_pressure" do
-      assert {:ok, %AtmosphericPressure{} = atmospheric_pressure} = Measurement.create_atmospheric_pressure(@valid_attrs)
-      assert atmospheric_pressure.date == DateTime.from_naive!(~N[2010-04-17T14:00:00Z], "Etc/UTC")
+      setup_fixture()
+
+      assert {:ok, %AtmosphericPressure{} = atmospheric_pressure} =
+               Measurement.create_atmospheric_pressure(@valid_attrs)
+
+      assert atmospheric_pressure.date ==
+               DateTime.from_naive!(~N[2010-04-17T14:00:00Z], "Etc/UTC")
+
       assert atmospheric_pressure.value == 42
     end
 
@@ -291,21 +366,35 @@ defmodule LogLac.MeasurementTest do
 
     test "update_atmospheric_pressure/2 with valid data updates the atmospheric_pressure" do
       atmospheric_pressure = atmospheric_pressure_fixture()
-      assert {:ok, %AtmosphericPressure{} = atmospheric_pressure} = Measurement.update_atmospheric_pressure(atmospheric_pressure, @update_attrs)
-      assert atmospheric_pressure.date == DateTime.from_naive!(~N[2011-05-18T15:01:01Z], "Etc/UTC")
+
+      assert {:ok, %AtmosphericPressure{} = atmospheric_pressure} =
+               Measurement.update_atmospheric_pressure(atmospheric_pressure, @update_attrs)
+
+      assert atmospheric_pressure.date ==
+               DateTime.from_naive!(~N[2011-05-18T15:01:01Z], "Etc/UTC")
+
       assert atmospheric_pressure.value == 43
     end
 
     test "update_atmospheric_pressure/2 with invalid data returns error changeset" do
       atmospheric_pressure = atmospheric_pressure_fixture()
-      assert {:error, %Ecto.Changeset{}} = Measurement.update_atmospheric_pressure(atmospheric_pressure, @invalid_attrs)
-      assert atmospheric_pressure == Measurement.get_atmospheric_pressure!(atmospheric_pressure.id)
+
+      assert {:error, %Ecto.Changeset{}} =
+               Measurement.update_atmospheric_pressure(atmospheric_pressure, @invalid_attrs)
+
+      assert atmospheric_pressure ==
+               Measurement.get_atmospheric_pressure!(atmospheric_pressure.id)
     end
 
     test "delete_atmospheric_pressure/1 deletes the atmospheric_pressure" do
       atmospheric_pressure = atmospheric_pressure_fixture()
-      assert {:ok, %AtmosphericPressure{}} = Measurement.delete_atmospheric_pressure(atmospheric_pressure)
-      assert_raise Ecto.NoResultsError, fn -> Measurement.get_atmospheric_pressure!(atmospheric_pressure.id) end
+
+      assert {:ok, %AtmosphericPressure{}} =
+               Measurement.delete_atmospheric_pressure(atmospheric_pressure)
+
+      assert_raise Ecto.NoResultsError, fn ->
+        Measurement.get_atmospheric_pressure!(atmospheric_pressure.id)
+      end
     end
 
     test "change_atmospheric_pressure/1 returns a atmospheric_pressure changeset" do
@@ -317,11 +406,43 @@ defmodule LogLac.MeasurementTest do
   describe "inertial_measurement_units" do
     alias LogLac.Measurement.InertialMeasurementUnit
 
-    @valid_attrs %{date: "2010-04-17T14:00:00Z", pich: 42, roll: 42, x_acceleration: 42, y_acceleration: 42, yaw: 42, z_acceleration: 42}
-    @update_attrs %{date: "2011-05-18T15:01:01Z", pich: 43, roll: 43, x_acceleration: 43, y_acceleration: 43, yaw: 43, z_acceleration: 43}
-    @invalid_attrs %{date: nil, pich: nil, roll: nil, x_acceleration: nil, y_acceleration: nil, yaw: nil, z_acceleration: nil}
+    @valid_attrs %{
+      date: "2010-04-17T14:00:00Z",
+      pich: 42,
+      roll: 42,
+      x_acceleration: 42,
+      y_acceleration: 42,
+      yaw: 42,
+      z_acceleration: 42,
+      device_code: "d1",
+      sensor_code: "s1"
+    }
+    @update_attrs %{
+      date: "2011-05-18T15:01:01Z",
+      pich: 43,
+      roll: 43,
+      x_acceleration: 43,
+      y_acceleration: 43,
+      yaw: 43,
+      z_acceleration: 43,
+      device_code: "d2",
+      sensor_code: "s2"
+    }
+    @invalid_attrs %{
+      date: nil,
+      pich: nil,
+      roll: nil,
+      x_acceleration: nil,
+      y_acceleration: nil,
+      yaw: nil,
+      z_acceleration: nil,
+      device_code: nil,
+      sensor_code: nil
+    }
 
     def inertial_measurement_unit_fixture(attrs \\ %{}) do
+      setup_fixture()
+
       {:ok, inertial_measurement_unit} =
         attrs
         |> Enum.into(@valid_attrs)
@@ -337,12 +458,20 @@ defmodule LogLac.MeasurementTest do
 
     test "get_inertial_measurement_unit!/1 returns the inertial_measurement_unit with given id" do
       inertial_measurement_unit = inertial_measurement_unit_fixture()
-      assert Measurement.get_inertial_measurement_unit!(inertial_measurement_unit.id) == inertial_measurement_unit
+
+      assert Measurement.get_inertial_measurement_unit!(inertial_measurement_unit.id) ==
+               inertial_measurement_unit
     end
 
     test "create_inertial_measurement_unit/1 with valid data creates a inertial_measurement_unit" do
-      assert {:ok, %InertialMeasurementUnit{} = inertial_measurement_unit} = Measurement.create_inertial_measurement_unit(@valid_attrs)
-      assert inertial_measurement_unit.date == DateTime.from_naive!(~N[2010-04-17T14:00:00Z], "Etc/UTC")
+      setup_fixture()
+
+      assert {:ok, %InertialMeasurementUnit{} = inertial_measurement_unit} =
+               Measurement.create_inertial_measurement_unit(@valid_attrs)
+
+      assert inertial_measurement_unit.date ==
+               DateTime.from_naive!(~N[2010-04-17T14:00:00Z], "Etc/UTC")
+
       assert inertial_measurement_unit.pich == 42
       assert inertial_measurement_unit.roll == 42
       assert inertial_measurement_unit.x_acceleration == 42
@@ -352,13 +481,24 @@ defmodule LogLac.MeasurementTest do
     end
 
     test "create_inertial_measurement_unit/1 with invalid data returns error changeset" do
-      assert {:error, %Ecto.Changeset{}} = Measurement.create_inertial_measurement_unit(@invalid_attrs)
+      setup_fixture()
+
+      assert {:error, %Ecto.Changeset{}} =
+               Measurement.create_inertial_measurement_unit(@invalid_attrs)
     end
 
     test "update_inertial_measurement_unit/2 with valid data updates the inertial_measurement_unit" do
       inertial_measurement_unit = inertial_measurement_unit_fixture()
-      assert {:ok, %InertialMeasurementUnit{} = inertial_measurement_unit} = Measurement.update_inertial_measurement_unit(inertial_measurement_unit, @update_attrs)
-      assert inertial_measurement_unit.date == DateTime.from_naive!(~N[2011-05-18T15:01:01Z], "Etc/UTC")
+
+      assert {:ok, %InertialMeasurementUnit{} = inertial_measurement_unit} =
+               Measurement.update_inertial_measurement_unit(
+                 inertial_measurement_unit,
+                 @update_attrs
+               )
+
+      assert inertial_measurement_unit.date ==
+               DateTime.from_naive!(~N[2011-05-18T15:01:01Z], "Etc/UTC")
+
       assert inertial_measurement_unit.pich == 43
       assert inertial_measurement_unit.roll == 43
       assert inertial_measurement_unit.x_acceleration == 43
@@ -369,30 +509,46 @@ defmodule LogLac.MeasurementTest do
 
     test "update_inertial_measurement_unit/2 with invalid data returns error changeset" do
       inertial_measurement_unit = inertial_measurement_unit_fixture()
-      assert {:error, %Ecto.Changeset{}} = Measurement.update_inertial_measurement_unit(inertial_measurement_unit, @invalid_attrs)
-      assert inertial_measurement_unit == Measurement.get_inertial_measurement_unit!(inertial_measurement_unit.id)
+
+      assert {:error, %Ecto.Changeset{}} =
+               Measurement.update_inertial_measurement_unit(
+                 inertial_measurement_unit,
+                 @invalid_attrs
+               )
+
+      assert inertial_measurement_unit ==
+               Measurement.get_inertial_measurement_unit!(inertial_measurement_unit.id)
     end
 
     test "delete_inertial_measurement_unit/1 deletes the inertial_measurement_unit" do
       inertial_measurement_unit = inertial_measurement_unit_fixture()
-      assert {:ok, %InertialMeasurementUnit{}} = Measurement.delete_inertial_measurement_unit(inertial_measurement_unit)
-      assert_raise Ecto.NoResultsError, fn -> Measurement.get_inertial_measurement_unit!(inertial_measurement_unit.id) end
+
+      assert {:ok, %InertialMeasurementUnit{}} =
+               Measurement.delete_inertial_measurement_unit(inertial_measurement_unit)
+
+      assert_raise Ecto.NoResultsError, fn ->
+        Measurement.get_inertial_measurement_unit!(inertial_measurement_unit.id)
+      end
     end
 
     test "change_inertial_measurement_unit/1 returns a inertial_measurement_unit changeset" do
       inertial_measurement_unit = inertial_measurement_unit_fixture()
-      assert %Ecto.Changeset{} = Measurement.change_inertial_measurement_unit(inertial_measurement_unit)
+
+      assert %Ecto.Changeset{} =
+               Measurement.change_inertial_measurement_unit(inertial_measurement_unit)
     end
   end
 
   describe "sounds" do
     alias LogLac.Measurement.Sound
 
-    @valid_attrs %{date: "2010-04-17T14:00:00Z", value: 42}
-    @update_attrs %{date: "2011-05-18T15:01:01Z", value: 43}
+    @valid_attrs %{date: "2010-04-17T14:00:00Z", value: 42, device_code: "d1", sensor_code: "s1"}
+    @update_attrs %{date: "2011-05-18T15:01:01Z", value: 43, device_code: "d2", sensor_code: "s2"}
     @invalid_attrs %{date: nil, value: nil}
 
     def sound_fixture(attrs \\ %{}) do
+      setup_fixture()
+
       {:ok, sound} =
         attrs
         |> Enum.into(@valid_attrs)
@@ -412,6 +568,7 @@ defmodule LogLac.MeasurementTest do
     end
 
     test "create_sound/1 with valid data creates a sound" do
+      setup_fixture()
       assert {:ok, %Sound{} = sound} = Measurement.create_sound(@valid_attrs)
       assert sound.date == DateTime.from_naive!(~N[2010-04-17T14:00:00Z], "Etc/UTC")
       assert sound.value == 42

@@ -2,12 +2,19 @@ defmodule LogLacWeb.DeviceControllerTest do
   use LogLacWeb.ConnCase
 
   alias LogLac.Member
+  import LogLac.TestData
 
-  @create_attrs %{code: "some code", name: "some name", remarks: "some remarks"}
-  @update_attrs %{code: "some updated code", name: "some updated name", remarks: "some updated remarks"}
+  @create_attrs %{code: "some code", name: "some name", remarks: "some remarks", type_code: "t1"}
+  @update_attrs %{
+    code: "some updated code",
+    name: "some updated name",
+    remarks: "some updated remarks",
+    type_code: "t1"
+  }
   @invalid_attrs %{code: nil, name: nil, remarks: nil}
 
   def fixture(:device) do
+    setup_type_fixture()
     {:ok, device} = Member.create_device(@create_attrs)
     device
   end
@@ -28,6 +35,7 @@ defmodule LogLacWeb.DeviceControllerTest do
 
   describe "create device" do
     test "redirects to show when data is valid", %{conn: conn} do
+      setup_type_fixture()
       conn = post(conn, Routes.device_path(conn, :create), device: @create_attrs)
 
       assert %{id: id} = redirected_params(conn)
@@ -75,6 +83,7 @@ defmodule LogLacWeb.DeviceControllerTest do
     test "deletes chosen device", %{conn: conn, device: device} do
       conn = delete(conn, Routes.device_path(conn, :delete, device))
       assert redirected_to(conn) == Routes.device_path(conn, :index)
+
       assert_error_sent 404, fn ->
         get(conn, Routes.device_path(conn, :show, device))
       end
