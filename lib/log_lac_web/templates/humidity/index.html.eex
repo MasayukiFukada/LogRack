@@ -5,6 +5,8 @@
     <tr>
       <th>Date</th>
       <th>Value</th>
+      <th>DeviceCode</th>
+      <th>SensorCode</th>
 
       <th></th>
     </tr>
@@ -14,6 +16,8 @@
     <tr>
       <td><%= humidity.date %></td>
       <td><%= humidity.value %></td>
+      <td><%= humidity.device_code %></td>
+      <td><%= humidity.sensor_code %></td>
 
       <td>
         <span><%= link "Show", to: Routes.humidity_path(@conn, :show, humidity) %></span>

@@ -27,6 +27,11 @@
     <%= @device_status.storage %>
   </li>
 
+  <li>
+    <strong>DeviceCode:</strong>
+    <%= @device_status.device_code %>
+  </li>
+
 </ul>
 
 <span><%= link "Edit", to: Routes.device_status_path(@conn, :edit, @device_status) %></span>

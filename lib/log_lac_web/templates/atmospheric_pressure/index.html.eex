@@ -5,6 +5,8 @@
     <tr>
       <th>Date</th>
       <th>Value</th>
+      <th>DeviceCode</th>
+      <th>SensorCode</th>
 
       <th></th>
     </tr>
@@ -14,6 +16,8 @@
     <tr>
       <td><%= atmospheric_pressure.date %></td>
       <td><%= atmospheric_pressure.value %></td>
+      <td><%= atmospheric_pressure.device_code %></td>
+      <td><%= atmospheric_pressure.sensor_code %></td>
 
       <td>
         <span><%= link "Show", to: Routes.atmospheric_pressure_path(@conn, :show, atmospheric_pressure) %></span>

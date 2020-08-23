@@ -12,6 +12,16 @@
     <%= @humidity.value %>
   </li>
 
+  <li>
+    <strong>DeviceCode:</strong>
+    <%= @humidity.device_code %>
+  </li>
+
+  <li>
+    <strong>SensorCode:</strong>
+    <%= @humidity.sensor_code %>
+  </li>
+
 </ul>
 
 <span><%= link "Edit", to: Routes.humidity_path(@conn, :edit, @humidity) %></span>

@@ -12,6 +12,16 @@
     <%= @illuminance.value %>
   </li>
 
+  <li>
+    <strong>DeviceCode:</strong>
+    <%= @illuminance.device_code %>
+  </li>
+
+  <li>
+    <strong>SensorCode:</strong>
+    <%= @illuminance.sensor_code %>
+  </li>
+
 </ul>
 
 <span><%= link "Edit", to: Routes.illuminance_path(@conn, :edit, @illuminance) %></span>

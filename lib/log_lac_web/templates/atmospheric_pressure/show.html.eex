@@ -12,6 +12,16 @@
     <%= @atmospheric_pressure.value %>
   </li>
 
+  <li>
+    <strong>DeviceCode:</strong>
+    <%= @atmospheric_pressure.device_code %>
+  </li>
+
+  <li>
+    <strong>SensorCode:</strong>
+    <%= @atmospheric_pressure.sensor_code %>
+  </li>
+
 </ul>
 
 <span><%= link "Edit", to: Routes.atmospheric_pressure_path(@conn, :edit, @atmospheric_pressure) %></span>

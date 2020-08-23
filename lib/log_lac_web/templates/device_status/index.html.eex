@@ -8,6 +8,7 @@
       <th>Memory use rate</th>
       <th>Temperature</th>
       <th>Storage</th>
+      <th>DeviceCode</th>
 
       <th></th>
     </tr>
@@ -20,6 +21,7 @@
       <td><%= device_status.memory_use_rate %></td>
       <td><%= device_status.temperature %></td>
       <td><%= device_status.storage %></td>
+      <td><%= device_status.device_code %></td>
 
       <td>
         <span><%= link "Show", to: Routes.device_status_path(@conn, :show, device_status) %></span>

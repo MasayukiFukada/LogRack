@@ -5,6 +5,8 @@
     <tr>
       <th>Date</th>
       <th>Value</th>
+      <th>DeviceCode</th>
+      <th>SensorCode</th>
 
       <th></th>
     </tr>
@@ -14,6 +16,8 @@
     <tr>
       <td><%= illuminance.date %></td>
       <td><%= illuminance.value %></td>
+      <td><%= illuminance.device_code %></td>
+      <td><%= illuminance.sensor_code %></td>
 
       <td>
         <span><%= link "Show", to: Routes.illuminance_path(@conn, :show, illuminance) %></span>

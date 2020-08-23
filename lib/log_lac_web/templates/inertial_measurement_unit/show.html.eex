@@ -37,6 +37,16 @@
     <%= @inertial_measurement_unit.z_acceleration %>
   </li>
 
+  <li>
+    <strong>DeviceCode:</strong>
+    <%= @inertial_measurement_unit.device_code %>
+  </li>
+
+  <li>
+    <strong>SensorCode:</strong>
+    <%= @inertial_measurement_unit.sensor_code %>
+  </li>
+
 </ul>
 
 <span><%= link "Edit", to: Routes.inertial_measurement_unit_path(@conn, :edit, @inertial_measurement_unit) %></span>

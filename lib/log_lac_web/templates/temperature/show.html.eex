@@ -12,6 +12,16 @@
     <%= @temperature.value %>
   </li>
 
+  <li>
+    <strong>DeviceCode:</strong>
+    <%= @temperature.device_code %>
+  </li>
+
+  <li>
+    <strong>SensorCode:</strong>
+    <%= @temperature.sensor_code %>
+  </li>
+
 </ul>
 
 <span><%= link "Edit", to: Routes.temperature_path(@conn, :edit, @temperature) %></span>

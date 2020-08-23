@@ -12,6 +12,16 @@
     <%= @sound.value %>
   </li>
 
+  <li>
+    <strong>DeviceCode:</strong>
+    <%= @sound.device_code %>
+  </li>
+
+  <li>
+    <strong>SensorCode:</strong>
+    <%= @sound.sensor_code %>
+  </li>
+
 </ul>
 
 <span><%= link "Edit", to: Routes.sound_path(@conn, :edit, @sound) %></span>

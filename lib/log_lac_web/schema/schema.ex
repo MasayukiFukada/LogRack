@@ -1,19 +1,19 @@
 defmodule LogLacWeb.Schema do
   use Absinthe.Schema
-  import_types LogLacWeb.Schema.ContentTypes
+  import_types(LogLacWeb.Schema.ContentTypes)
 
   alias LogLacWeb.Resolvers
 
   query do
     @desc "デバイスを取得"
     field :devices, list_of(:device) do
-      resolve &Resolvers.Content.list_devices/3
+      resolve(&Resolvers.Content.list_devices/3)
     end
 
     # TODO: 日付で絞り込む
     @desc "気温リストを取得"
     field :temperatures, list_of(:temperature) do
-      resolve &Resolvers.Content.list_temperatures/3
+      resolve(&Resolvers.Content.list_temperatures/3)
     end
   end
 
@@ -21,41 +21,92 @@ defmodule LogLacWeb.Schema do
     @desc "デバイスの状態を登録する"
     field :create_device_status, :device_status do
       @desc "CPU の使用率"
-      arg :cpu_use_rate, non_null(:integer)
+      arg(:cpu_use_rate, non_null(:integer))
 
       @desc "メモリの使用率"
-      arg :memory_use_rate, non_null(:integer)
+      arg(:memory_use_rate, non_null(:integer))
 
       @desc "ストレージの残り容量(MByte)"
-      arg :storage, non_null(:integer)
+      arg(:storage, non_null(:integer))
 
       @desc "温度(℃)"
-      arg :temperature, non_null(:float)
+      arg(:temperature, non_null(:float))
 
       @desc "起動日時"
-      arg :wake_on_at, non_null(:datetime)
+      arg(:wake_on_at, non_null(:datetime))
 
       @desc "デバイスコード"
-      arg :device_code, non_null(:string)
+      arg(:device_code, non_null(:string))
 
-      resolve &Resolvers.DeviceStatusResolvers.create_device_status/3
+      resolve(&Resolvers.DeviceStatusResolvers.create_device_status/3)
     end
 
     @desc "気温を登録する"
     field :create_temperature, :temperature do
       @desc "測定日時"
-      arg :date, non_null(:datetime)
+      arg(:date, non_null(:datetime))
 
       @desc "温度"
-      arg :value, non_null(:float)
+      arg(:value, non_null(:float))
 
       @desc "デバイスコード"
-      arg :device_code, non_null(:string)
+      arg(:device_code, non_null(:string))
 
       @desc "センサーコード"
-      arg :sensor_code, non_null(:string)
+      arg(:sensor_code, non_null(:string))
 
-      resolve &Resolvers.TemperatureResolvers.create_temperature/3
+      resolve(&Resolvers.TemperatureResolvers.create_temperature/3)
+    end
+
+    @desc "気圧を登録する"
+    field :create_atmospheric_pressure, :atmospheric_pressure do
+      @desc "測定日時"
+      arg(:date, non_null(:datetime))
+
+      @desc "気圧"
+      arg(:value, non_null(:integer))
+
+      @desc "デバイスコード"
+      arg(:device_code, non_null(:string))
+
+      @desc "センサーコード"
+      arg(:sensor_code, non_null(:string))
+
+      resolve(&Resolvers.AtmosphericPressureResolvers.create_atmospheric_pressure/3)
+    end
+
+    @desc "湿度を登録する"
+    field :create_humidity, :humidity do
+      @desc "測定日時"
+      arg(:date, non_null(:datetime))
+
+      @desc "湿度"
+      arg(:value, non_null(:integer))
+
+      @desc "デバイスコード"
+      arg(:device_code, non_null(:string))
+
+      @desc "センサーコード"
+      arg(:sensor_code, non_null(:string))
+
+      resolve(&Resolvers.HumidityResolvers.create_humidity/3)
+    end
+
+    @desc "照度を登録する"
+    field :create_illuminance, :illuminance do
+      @desc "測定日時"
+      arg(:date, non_null(:datetime))
+
+      @desc "照度"
+      arg(:value, non_null(:integer))
+
+      @desc "デバイスコード"
+      arg(:device_code, non_null(:string))
+
+      @desc "センサーコード"
+      arg(:sensor_code, non_null(:string))
+
+      resolve(&Resolvers.IlluminanceResolvers.create_illuminance/3)
     end
   end
 end

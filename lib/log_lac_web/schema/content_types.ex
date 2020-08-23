@@ -1,6 +1,6 @@
 defmodule LogLacWeb.Schema.ContentTypes do
   use Absinthe.Schema.Notation
-  import_types Absinthe.Type.Custom
+  import_types(Absinthe.Type.Custom)
 
   object :device do
     @desc "デバイスコード"
@@ -60,6 +60,48 @@ defmodule LogLacWeb.Schema.ContentTypes do
     field :date, :datetime
 
     @desc "温度"
+    field :value, :float
+
+    @desc "デバイス"
+    field :device, :device
+
+    @desc "センサー"
+    field :sensor, :sensor
+  end
+
+  object :atmospheric_pressure do
+    @desc "測定日"
+    field :date, :datetime
+
+    @desc "気圧"
+    field :value, :float
+
+    @desc "デバイス"
+    field :device, :device
+
+    @desc "センサー"
+    field :sensor, :sensor
+  end
+
+  object :humidity do
+    @desc "測定日"
+    field :date, :datetime
+
+    @desc "湿度"
+    field :value, :float
+
+    @desc "デバイス"
+    field :device, :device
+
+    @desc "センサー"
+    field :sensor, :sensor
+  end
+
+  object :illuminance do
+    @desc "測定日"
+    field :date, :datetime
+
+    @desc "照度"
     field :value, :float
 
     @desc "デバイス"

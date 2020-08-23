@@ -10,6 +10,8 @@
       <th>X acceleration</th>
       <th>Y acceleration</th>
       <th>Z acceleration</th>
+      <th>DeviceCode</th>
+      <th>SensorCode</th>
 
       <th></th>
     </tr>
@@ -24,6 +26,8 @@
       <td><%= inertial_measurement_unit.x_acceleration %></td>
       <td><%= inertial_measurement_unit.y_acceleration %></td>
       <td><%= inertial_measurement_unit.z_acceleration %></td>
+      <td><%= inertial_measurement_unit.device_code %></td>
+      <td><%= inertial_measurement_unit.sensor_code %></td>
 
       <td>
         <span><%= link "Show", to: Routes.inertial_measurement_unit_path(@conn, :show, inertial_measurement_unit) %></span>

@@ -5,6 +5,8 @@
     <tr>
       <th>Date</th>
       <th>Value</th>
+      <th>DeviceCode</th>
+      <th>SensorCode</th>
 
       <th></th>
     </tr>
@@ -14,6 +16,8 @@
     <tr>
       <td><%= temperature.date %></td>
       <td><%= temperature.value %></td>
+      <td><%= temperature.device_code %></td>
+      <td><%= temperature.sensor_code %></td>
 
       <td>
         <span><%= link "Show", to: Routes.temperature_path(@conn, :show, temperature) %></span>

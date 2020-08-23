@@ -5,6 +5,8 @@
     <tr>
       <th>Date</th>
       <th>Value</th>
+      <th>DeviceCode</th>
+      <th>SensorCode</th>
 
       <th></th>
     </tr>
@@ -14,6 +16,8 @@
     <tr>
       <td><%= sound.date %></td>
       <td><%= sound.value %></td>
+      <td><%= sound.device_code %></td>
+      <td><%= sound.sensor_code %></td>
 
       <td>
         <span><%= link "Show", to: Routes.sound_path(@conn, :show, sound) %></span>
